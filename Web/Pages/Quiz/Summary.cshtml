@@ -1,0 +1,7 @@
+﻿@page "{correct}/{total}"
+@model BackendLab01.Pages.Summary
+@{
+    ViewData["Title"] = "Summary";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<p>Twój wynik to :  @Model.CorrectAnswersCount / @Model.TotalAnswersCount</p>
