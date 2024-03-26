@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Interfaces.Criteria;
+﻿using ApplicationCore.Exeptions;
+using ApplicationCore.Interfaces.Criteria;
 using ApplicationCore.Interfaces.Repository;
 
 namespace BackendLab01;
@@ -26,11 +27,28 @@ public class QuizUserService : IQuizUserService
         return quizRepository.FindById(id);
     }
 
+
+    // Kod inny (?)
     public void SaveUserAnswerForQuiz(int quizId, int userId, int quizItemId, string answer)
     {
         QuizItem? item = itemRepository.FindById(quizItemId);
-        var userAnswer = new QuizItemUserAnswer(quizItem: item, userId: userId, answer: answer, quizId: quizId);
-        answerRepository.Add(userAnswer);
+        var userAnswer = new QuizItemUserAnswer(item, userId, quizId, answer);
+        var find = answerRepository.FindById(userAnswer.Id);
+        if (find == null)
+        {
+            answerRepository.Add(userAnswer);
+        }
+        else
+        {
+            throw new DuplicateAnswerException($"User {userId} already answered for question {quizItemId}");
+        }
+
+
+
+        //var quiz = quizRepository.FindById(quizId);
+        //var item = quiz.Items.FirstOrDefault(x => x.Id == quizItemId);
+        //var userAnswer = new QuizItemUserAnswer(quizItem: item, userId: userId, answer: answer, quizId: quizId);
+        //answerRepository.Add(userAnswer);
     }
 
 
@@ -42,6 +60,13 @@ public class QuizUserService : IQuizUserService
         //     .ToList();
         return answerRepository.FindBySpecification(new QuizItemsForQuizIdFilledByUser(quizId, userId)).ToList();
     }
+
+    public int CountCorrectAnswersForQuizFilledByUser(int quizId, int userId)
+    {
+        return GetUserAnswersForQuiz(quizId, userId)
+            .Count(e => e.IsCorrect());
+    }
+
     public List<Quiz> GetAllQuiz()
     {
         return quizRepository.FindAll();
