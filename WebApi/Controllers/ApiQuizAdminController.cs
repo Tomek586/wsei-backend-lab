@@ -1,4 +1,5 @@
-﻿using BackendLab01;
+﻿using AutoMapper;
+using BackendLab01;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace WebApi.Controllers
     {
         [Required]
         [StringLength(200, MinimumLength = 3)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
     }
 
     [ApiController]
@@ -20,11 +21,13 @@ namespace WebApi.Controllers
     {
         private readonly IQuizAdminService _adminService;
         private readonly LinkGenerator _linkGenerator;
+        private readonly IMapper _mapper;
 
-        public ApiQuizAdminController(IQuizAdminService adminService, LinkGenerator linkGenerator)
+        public ApiQuizAdminController(IQuizAdminService adminService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _adminService = adminService;
             _linkGenerator = linkGenerator;
+            _mapper = mapper;
         }
 
         //[HttpPost]

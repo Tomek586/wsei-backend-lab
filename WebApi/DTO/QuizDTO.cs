@@ -7,7 +7,8 @@ namespace WebApi.DTO
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<QuizItemDTO> Options { get; set; }
+
+        public List<QuizItemDTO> Items { get; set; }
 
         public static QuizDTO Of(Quiz quiz)
         {
@@ -15,7 +16,7 @@ namespace WebApi.DTO
             {
                 Id = quiz.Id,
                 Title = quiz.Title,
-                Options = quiz.Items.Select(QuizItemDTO.Of).ToList()
+                Items = quiz.Items.Select(QuizItemDTO.Of).ToList()
             };
         }
 

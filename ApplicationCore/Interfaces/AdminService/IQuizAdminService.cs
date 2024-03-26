@@ -8,4 +8,5 @@ public interface IQuizAdminService
     public List<QuizItem> FindAllQuizItems();
     public List<Quiz> FindAllQuizzes();
     void AddQuizItemToQuiz(int quizId, QuizItem item);
+   
 }
