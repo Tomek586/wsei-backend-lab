@@ -13,7 +13,7 @@ namespace WebApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,6 +26,7 @@ namespace WebApi
             // Singletons - IQuizUserService
             builder.Services.AddSingleton<IQuizAdminService, QuizAdminService>();
             builder.Services.AddSingleton<IQuizUserService, QuizUserService>();
+            builder.Services.AddSingleton<IQuizAdminService, QuizAdminService>();
 
             var app = builder.Build();
 

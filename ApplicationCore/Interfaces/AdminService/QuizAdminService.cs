@@ -37,4 +37,9 @@ public class QuizAdminService:IQuizAdminService
     public List<Quiz> FindAllQuizzes()
     { return quizRepository.FindAll();
     }
+
+    public void AddQuizItemToQuiz(int quizId, QuizItem item)
+    {
+        throw new NotImplementedException();
+    }
 }
